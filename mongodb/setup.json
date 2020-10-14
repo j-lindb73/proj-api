@@ -1,0 +1,12 @@
+[
+    {
+        "user": "Kungen",
+        "message": "Det är Kungen",
+        "timestamp": "2020-10-01 12:34:56"
+    },
+    {
+        "user": "Drottningen",
+        "message": "Hej gubben min...",
+        "timestamp": "2020-10-01 12:36:00"
+    }
+]
