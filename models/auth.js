@@ -99,7 +99,7 @@ const auth = {
                     status: 401,
                     source: "/login",
                     title: "Email or password missing",
-                    detail: "Email or password missing in request"
+                    detail: "Email or  password missing in request"
                 }
             });
         }

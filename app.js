@@ -2,19 +2,24 @@ const express = require("express");
 const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
+const port = 1337;
 const bodyParser = require("body-parser");
+
+// import modules
+const stock_module = require('./models/stock');
 
 // import routes
 const index = require('./routes/index');
 const register = require('./routes/register');
 const login = require('./routes/login');
 const reports = require('./routes/reports');
-const chat = require('./routes/chat');
+const user = require('./routes/user');
+const stock = require('./routes/stock');
+// const chat = require('./routes/chat');
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-const port = 1337;
 
 app.use(cors());
 
@@ -38,7 +43,9 @@ app.use('/', index);
 app.use('/register', register);
 app.use('/reports', reports);
 app.use('/login', login);
-app.use('/chat', chat);
+app.use('/user', user);
+app.use('/stock', stock);
+// app.use('/chat', chat);
 
 
 // Add routes for 404 and error handling
@@ -70,5 +77,75 @@ app.use((err, req, res, next) => {
 
 // Start up server
 const server = app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+
+// Stock socket
+const io = require("socket.io")(server);
+
+
+var hallonbatar = {
+    name: "Hallonbåtar",
+    rate: 1.002,
+    variance: 0.6,
+    startingPoint: 20,
+};
+
+var lakritssnoren = {
+    name: "Lakritssnören",
+    rate: 1.001,
+    variance: 0.4,
+    startingPoint: 20,
+};
+
+var cakes = [hallonbatar, lakritssnoren];
+
+
+function getRandomValue(){
+    return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
+}
+
+io.on('connection', function(socket) {
+    console.log('a user connected');
+    socket.on('disconnect', function() {
+        console.log('user disconnected');
+    });
+});
+
+setInterval(function () {
+    cakes.map((cake) => {
+        cake["course"] = stock_module.getStockPrice(cake);
+        cake["timestamp"] = getNow();
+        return cake;
+    });
+
+    // console.log(cakes);
+
+    io.emit("newdata", cakes);
+}, 5000);
+
+// io.on("connection", socket => {
+//     setInterval(() => {
+//         cakes.map((cake) => {
+//             cake["course"] = stock_module.getStockPrice(cake);
+//             cake["timestamp"] = getNow();
+//             return cake;
+//         });
+//         // socket.broadcast.emit("newdata", getRandomValue())
+//         // socket.broadcast.emit('newdata', {'stock': 'Hallonbåtar', 'timestamp': getNow(), 'course': getRandomValue()})
+//         socket.broadcast.emit('newdata', cakes);
+
+//     }, 10000)
+// });
+
+
+
+// Get timestamp
+
+function getNow() {
+    const d = new Date();
+    const timestampISO = d.toISOString();
+    return timestampISO;
+
+ 
+}
 
 module.exports = server;

@@ -6,5 +6,5 @@ module.exports = (function () {
         return new sqlite3.Database('./db/test.sqlite');
     }
 
-    return new sqlite3.Database('./db/texts.sqlite');
+    return new sqlite3.Database('./db/avanza.sqlite');
 }());

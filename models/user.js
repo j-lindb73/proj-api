@@ -1,0 +1,227 @@
+const db = require('../db/database');
+
+
+const user = {
+    getBalance: function(res, body) {
+        const email = body.email;
+        // const password = body.password;
+        // const apiKey = body.api_key;
+
+        if (!email) {
+            missingValue(res);
+        }
+
+        db.get("SELECT * FROM users WHERE email = ?",
+        // apiKey,
+        email,
+        (err, rows) => {
+            if (err) {
+                return res.status(500).json({
+                    errors: {
+                        status: 500,
+                        source: "/user",
+                        title: "Database error",
+                        detail: err.message
+                    }
+                });
+            }
+
+            if (rows === undefined) {
+                return res.status(401).json({
+                    errors: {
+                        status: 401,
+                        source: "/user",
+                        title: "User not found",
+                        detail: "User with provided email not found."
+                    }
+                });
+            }
+            const user = rows;
+
+            console.log(user);
+
+            return res.status(200).json({
+                data: {
+                    type: "success",
+                    message: "User balance",
+                    user: user.email,
+                    balance: user.money
+                }
+            });
+        });
+    },
+    checkBalance: function(res, body, next=null) {
+        
+        // const password = body.password;
+        // const apiKey = body.api_key;
+        const email = body.email;
+        
+        if (!email) {
+            missingValue(res);
+        }
+
+        const total_price = body.amount*body.price;
+
+
+
+        db.get("SELECT * FROM users WHERE email = ?",
+        // apiKey,
+        email,
+        (err, rows) => {
+            if (err) {
+                return res.status(500).json({
+                    errors: {
+                        status: 500,
+                        source: "/user",
+                        title: "Database error",
+                        detail: err.message
+                    }
+                });
+            }
+
+            if (rows === undefined) {
+                return res.status(401).json({
+                    errors: {
+                        status: 401,
+                        source: "/user",
+                        title: "User not found",
+                        detail: "User with provided email not found."
+                    }
+                });
+            }
+            const user = rows;
+            
+            console.log("In check balance!!!");
+            console.log(user);
+            console.log(body);
+            if (user.money < total_price) {
+                return res.status(401).json({
+                    errors: {
+                        status: 401,
+                        source: "/user",
+                        title: "No funds",
+                        detail: "User have no funds to proceed with purchase."
+                    }
+                });
+            }
+
+
+            if (typeof next === 'function') {
+                next();
+            } else {
+
+                // return res.status(201).json({
+                //     data: {
+                //         message: "Money withdrawn."
+                //     }
+                // });
+                
+                return res.status(200).json({
+                        data: {
+                                type: "success",
+                                message: "User balance",
+                                user: user.email,
+                                balance: user.money
+                            }
+                        });
+                }
+            });
+    },
+    deposit: function(res,body, next=null) {
+        console.log("IN DEPOSIT");
+        const email = body.email;
+        // const money = body.money;
+        // const password = body.password;
+        // const apiKey = body.api_key;
+        const total_price = body.amount*body.price;
+
+        const deposit = total_price ? total_price : body.money;
+
+        if (!email || !deposit) {
+            missingValue(res);
+            return;
+        }
+
+        db.run("UPDATE users SET money = money + ? WHERE email = ?",
+        deposit,
+        email, (err) => {
+            if (err) {
+                return res.status(500).json({
+                    errors: {
+                        status: 500,
+                        source: "/user/deposit",
+                        title: "Database error",
+                        detail: err.message
+                    }
+                });
+            }
+            if (typeof next === 'function') {
+                next();
+            } else {
+
+                return res.status(201).json({
+                    data: {
+                        message: "Money deposited."
+                    }
+                });
+            }
+
+        });
+
+    },
+    withdraw: function(res,body, next=null) {
+        const email = body.email;
+        // const money = body.money;
+        const total_price = body.amount*body.price;
+
+        const withdraw = total_price ? total_price : body.money;
+
+        console.log("IN WITHDRAW");
+        console.log(body);
+
+        if (!email || !withdraw) {
+            missingValue(res);
+        }
+
+        db.run("UPDATE users SET money = money - ? WHERE email = ?",
+        withdraw,
+        email, (err) => {
+            if (err) {
+                return res.status(500).json({
+                    errors: {
+                        status: 500,
+                        source: "/user/withdraw",
+                        title: "Database error",
+                        detail: err.message
+                    }
+                });
+            }
+            console.log("Här är next!!");
+            console.log(typeof next);
+            if (typeof next === 'function') {
+                next();
+            } else {
+
+                return res.status(201).json({
+                    data: {
+                        message: "Money withdrawn."
+                    }
+                });
+            }
+        });
+
+    }
+};
+
+function missingValue(res) {
+    return res.status(401).json({
+        errors: {
+            status: 401,
+            source: "/user",
+            title: "Value is missing",
+            detail: "Value is missing in request"
+        }
+    });
+}
+
+module.exports = user;
