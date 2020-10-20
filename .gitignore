@@ -1,6 +1,6 @@
 node_modules/
 *.sqlite
-# config.json
+config.json
 
 # ---------------------------------------------------------------------------------------------
 # Official .gitignore from https://github.com/github/gitignore/blob/master/Node.gitignore below

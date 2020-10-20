@@ -38,7 +38,8 @@ const stock = {
                 });
             });
     },
-    getStocks: function(res, body, next) {
+    // getStocks: function(res, body, next) {    Ändrade denna för nex taldrig användes...kanske behöver gå tillbaka...
+    getStocks: function(res, body) {
         const email = body.email;
 
         if (!email) {
