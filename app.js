@@ -6,7 +6,7 @@ const port = 1337;
 const bodyParser = require("body-parser");
 
 // import modules
-const stock_module = require('./models/stock');
+const stockModule = require('./models/stock');
 
 // import routes
 const index = require('./routes/index');
@@ -99,9 +99,9 @@ var lakritssnoren = {
 var cakes = [hallonbatar, lakritssnoren];
 
 
-function getRandomValue(){
-    return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
-}
+// function getRandomValue() {
+//     return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
+// }
 
 io.on('connection', function(socket) {
     console.log('a user connected');
@@ -112,7 +112,7 @@ io.on('connection', function(socket) {
 
 setInterval(function () {
     cakes.map((cake) => {
-        cake["course"] = stock_module.getStockPrice(cake);
+        cake["course"] = stockModule.getStockPrice(cake);
         cake["timestamp"] = getNow();
         return cake;
     });
@@ -122,30 +122,13 @@ setInterval(function () {
     io.emit("newdata", cakes);
 }, 5000);
 
-// io.on("connection", socket => {
-//     setInterval(() => {
-//         cakes.map((cake) => {
-//             cake["course"] = stock_module.getStockPrice(cake);
-//             cake["timestamp"] = getNow();
-//             return cake;
-//         });
-//         // socket.broadcast.emit("newdata", getRandomValue())
-//         // socket.broadcast.emit('newdata', {'stock': 'Hallonbåtar', 'timestamp': getNow(), 'course': getRandomValue()})
-//         socket.broadcast.emit('newdata', cakes);
-
-//     }, 10000)
-// });
-
-
-
 // Get timestamp
 
 function getNow() {
     const d = new Date();
     const timestampISO = d.toISOString();
-    return timestampISO;
 
- 
+    return timestampISO;
 }
 
 module.exports = server;

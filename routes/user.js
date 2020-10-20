@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 const db = require('../db/database');
-const auth = require('../models/auth');
+// const auth = require('../models/auth');
 const user = require('../models/user');
 // const bcrypt = require('bcryptjs');
 

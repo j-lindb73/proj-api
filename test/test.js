@@ -16,7 +16,7 @@ chai.should();
 
 chai.use(chaiHttp);
 
-describe('Testing of ME-API', () => {
+describe('Testing of PROJ-API', () => {
     // before(() => {
     //     return new Promise((resolve) => {
 
@@ -108,14 +108,14 @@ describe('Testing of ME-API', () => {
                     done();
                 });
         });
-        it('POST register report should work (token)', (done) => {
+        it('POST deposit money should work (token and email)', (done) => {
             chai.request(server)
-                .post("/reports")
+                .post("/user/deposit")
                 .set('Content-Type', 'application/json')
                 .set('x-access-token', token)
                 .send(JSON.stringify({
-                    week: 1,
-                    text: "Report 1"
+                    email: "test@test.se",
+                    money: 500
                 }))
                 .end((err, res) => {
                     res.should.have.status(201);
