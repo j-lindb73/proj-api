@@ -113,6 +113,8 @@ var cakes = [hallonbatar, lakritssnoren];
 
 // ===================
 
+io.set('origins', ['https://avanza.hasselstigen.me:443', 'https://me-app.hasselstigen.me:443']);
+
 io.on('connection', (socket) => {
     console.log("User connected");
     // socket.username = 'Gäst';
