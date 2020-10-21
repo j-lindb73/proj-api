@@ -164,14 +164,9 @@ setInterval(function () {
 
 function getNow() {
     const d = new Date();
-    return d.toISOString();
+    const timestampISO = d.toISOString();
+
+    return timestampISO;
 }
-
-// function getNow() {
-//     const d = new Date();
-//     const timestampISO = d.toISOString();
-
-//     return timestampISO;
-// }
 
 module.exports = server;
