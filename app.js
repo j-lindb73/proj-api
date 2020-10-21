@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
-const port = 1337;
+const port = 1338;
 const bodyParser = require("body-parser");
 
 // import modules
@@ -15,7 +15,7 @@ const login = require('./routes/login');
 const reports = require('./routes/reports');
 const user = require('./routes/user');
 const stock = require('./routes/stock');
-// const chat = require('./routes/chat');
+const chat = require('./routes/chat');
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -45,7 +45,7 @@ app.use('/reports', reports);
 app.use('/login', login);
 app.use('/user', user);
 app.use('/stock', stock);
-// app.use('/chat', chat);
+app.use('/chat', chat);
 
 
 // Add routes for 404 and error handling
@@ -103,12 +103,42 @@ var cakes = [hallonbatar, lakritssnoren];
 //     return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
 // }
 
-io.on('connection', function(socket) {
-    console.log('a user connected');
-    socket.on('disconnect', function() {
-        console.log('user disconnected');
+// io.on('connection', function(socket) {
+//     console.log('a user connected');
+//     socket.on('disconnect', function() {
+//         console.log('user disconnected');
+//     });
+// });
+
+
+// ===================
+
+io.on('connection', (socket) => {
+    console.log("User connected");
+    // socket.username = 'Gäst';
+    socket.on('message', (msg) => {
+        console.log(msg);
+        // insertPost(db, socket.username, msg, getNow(), function() {
+        //     client.close();
+        //   });
+        io.emit('message', {'user': socket.username, 'timestamp': getNow(), 'message': msg});
     });
+    socket.on('join', (username) => {
+       if (username != null) {
+           socket.username = username;
+       }
+       console.log(socket.username + " joined");
+       socket.broadcast.emit('message', {'user': 'Server', 'timestamp': getNow(), 'message': socket.username + " har anslutit till chatten!"})
+    })
+
+    socket.on('disconnect', (reason) => {
+        // console.log(reason);
+        console.log(socket.username);
+        socket.broadcast.emit('message', {'user': 'Server', 'timestamp': getNow(), 'message': socket.username + " har lämnat chatten!"})
+      });
 });
+
+// =========================
 
 setInterval(function () {
     cakes.map((cake) => {
