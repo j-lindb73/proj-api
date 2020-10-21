@@ -126,18 +126,21 @@ io.on('connection', (socket) => {
         io.emit('message', {'user': socket.username, 'timestamp': getNow(), 'message': msg});
     });
     socket.on('join', (username) => {
-       if (username != null) {
+        if (username != null) {
            socket.username = username;
-       }
-       console.log(socket.username + " joined");
-       socket.broadcast.emit('message', {'user': 'Server', 'timestamp': getNow(), 'message': socket.username + " har anslutit till chatten!"})
-    })
+        }
+        console.log(socket.username + " joined");
+        socket.broadcast.emit('message', {'user': 'Server', 'timestamp': getNow(), 'message': socket.username + " har anslutit till chatten!"});
+    });
 
     socket.on('disconnect', (reason) => {
         // console.log(reason);
         console.log(socket.username);
-        socket.broadcast.emit('message', {'user': 'Server', 'timestamp': getNow(), 'message': socket.username + " har lämnat chatten!"})
-      });
+        socket.broadcast.emit('message', {
+            'user': 'Server',
+            'timestamp': getNow(),
+            'message': socket.username + " har lämnat chatten!" . reason});
+        });
 });
 
 // =========================
