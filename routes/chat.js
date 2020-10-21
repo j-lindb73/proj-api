@@ -11,20 +11,23 @@ router.get("/", async (req, res) => {
     try {
         let response = await chat.findInCollection(dsn, "posts", {}, {}, 0);
 
-        res.json(response);
+        res.status(200).json(response);
     } catch (err) {
-        res.json(err);
+        res.status(500).json(err);
     }
 });
+
+
+
 
 router.post("/", async (req, res) => {
     // console.log(req.body);
     try {
         let response = await chat.insertCollection(dsn, "posts", req.body);
 
-        res.json(response);
+        res.status(200).json(response);
     } catch (err) {
-        res.json(err);
+        res.status(500).json(err);
     }
 });
 

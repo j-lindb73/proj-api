@@ -17,12 +17,12 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:email", (req, res) => {
-    // console.log(res);
-    let balance = user.getBalance(req.params.email);
+// router.get("/:email", (req, res) => {
+//     // console.log(res);
+//     let balance = user.getBalance(req.params.email);
 
-    res.status(200).json(balance);
-});
+//     res.status(200).json(balance);
+// });
 
 router.post("/", (req, res) => {
     // auth.register(res, req.body);

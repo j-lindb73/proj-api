@@ -12,7 +12,7 @@ const stockModule = require('./models/stock');
 const index = require('./routes/index');
 const register = require('./routes/register');
 const login = require('./routes/login');
-const reports = require('./routes/reports');
+// const reports = require('./routes/reports');
 const user = require('./routes/user');
 const stock = require('./routes/stock');
 const chat = require('./routes/chat');
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 // Add routes
 app.use('/', index);
 app.use('/register', register);
-app.use('/reports', reports);
+// app.use('/reports', reports);
 app.use('/login', login);
 app.use('/user', user);
 app.use('/stock', stock);
@@ -164,9 +164,14 @@ setInterval(function () {
 
 function getNow() {
     const d = new Date();
-    const timestampISO = d.toISOString();
-
-    return timestampISO;
+    return d.toISOString();
 }
+
+// function getNow() {
+//     const d = new Date();
+//     const timestampISO = d.toISOString();
+
+//     return timestampISO;
+// }
 
 module.exports = server;

@@ -4,11 +4,11 @@ const db = require('../db/database');
 const user = {
     getBalance: function(res, body) {
         const email = body.email;
-        // const password = body.password;
-        // const apiKey = body.api_key;
+
 
         if (!email) {
             missingValue(res);
+            return;
         }
 
         db.get("SELECT * FROM users WHERE email = ?",
@@ -51,12 +51,11 @@ const user = {
             });
     },
     checkBalance: function(res, body, next=null) {
-        // const password = body.password;
-        // const apiKey = body.api_key;
         const email = body.email;
 
         if (!email) {
             missingValue(res);
+            return;
         }
 
         const totalPrice = body.amount*body.price;
@@ -90,9 +89,9 @@ const user = {
                 }
                 const user = rows;
 
-                console.log("In check balance!!!");
-                console.log(user);
-                console.log(body);
+                // console.log("In check balance!!!");
+                // console.log(user);
+                // console.log(body);
                 if (user.money < totalPrice) {
                     return res.status(401).json({
                         errors: {
@@ -108,12 +107,6 @@ const user = {
                 if (typeof next === 'function') {
                     next();
                 } else {
-                    // return res.status(201).json({
-                    //     data: {
-                    //         message: "Money withdrawn."
-                    //     }
-                    // });
-
                     return res.status(200).json({
                         data: {
                             type: "success",
@@ -126,11 +119,9 @@ const user = {
             });
     },
     deposit: function(res, body, next=null) {
-        console.log("IN DEPOSIT");
+        // console.log("IN DEPOSIT");
         const email = body.email;
-        // const money = body.money;
-        // const password = body.password;
-        // const apiKey = body.api_key;
+
         const totalPrice = body.amount*body.price;
 
         const deposit = totalPrice ? totalPrice : body.money;
@@ -176,6 +167,7 @@ const user = {
 
         if (!email || !withdraw) {
             missingValue(res);
+            return;
         }
 
         db.run("UPDATE users SET money = money - ? WHERE email = ?",

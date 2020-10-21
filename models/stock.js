@@ -12,6 +12,7 @@ const stock = {
 
         if (!email || !stockname || !amount || !price) {
             missingValue(res);
+            return;
         }
 
 
