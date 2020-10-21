@@ -1,4 +1,6 @@
 build:
+  services:
+    mongo: 4
   nodes:
     coverage:
       tests:
