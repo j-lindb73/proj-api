@@ -25,6 +25,12 @@ npm run start
 
 ### Documentation
 
-I used Express to create API. [Express Website](https://expressjs.com/).
+[Express](https://expressjs.com/) is used to create API.
+
+[SQLITE](https://sqlite.org/) is used to handle database which contains information about registered users and their money and stocks.
+
+[mongoDB](https://mongodb.com) is ised to save chat messages between sessions.
+
+
 
 
