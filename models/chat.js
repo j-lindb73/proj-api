@@ -1,6 +1,6 @@
 const mongo = require("mongodb").MongoClient;
 // The mongo-server is local, both in development and production
-const dsn = "mongodb://localhost:27017/chat";
+// const dsn = "mongodb://localhost:27017/chat";
 
 
 const chat = {

@@ -127,10 +127,13 @@ io.on('connection', (socket) => {
     });
     socket.on('join', (username) => {
         if (username != null) {
-           socket.username = username;
+            socket.username = username;
         }
         console.log(socket.username + " joined");
-        socket.broadcast.emit('message', {'user': 'Server', 'timestamp': getNow(), 'message': socket.username + " har anslutit till chatten!"});
+        socket.broadcast.emit('message', {
+            'user': 'Server',
+            'timestamp': getNow(),
+            'message': socket.username + " har anslutit till chatten!"});
     });
 
     socket.on('disconnect', (reason) => {
@@ -139,8 +142,8 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('message', {
             'user': 'Server',
             'timestamp': getNow(),
-            'message': socket.username + " har lämnat chatten!" . reason});
-        });
+            'message': socket.username + " har lämnat chatten!" + reason});
+    });
 });
 
 // =========================
