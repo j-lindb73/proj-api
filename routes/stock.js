@@ -45,12 +45,6 @@ router.post("/sell",
 
 );
 
-router.post("/withdraw",
-    (req, res, next) => auth.checkToken(req, res, next),
-    (req, res) => user.withdraw(res, req.body)
-);
-
-
 // router.delete("/", (req, res) => {
 //     let sql = "DELETE FROM users WHERE email = ?;";
 

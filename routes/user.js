@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 const db = require('../db/database');
-// const auth = require('../models/auth');
+const auth = require('../models/auth');
 const user = require('../models/user');
 // const bcrypt = require('bcryptjs');
 
@@ -24,20 +24,20 @@ router.get("/", (req, res) => {
 //     res.status(200).json(balance);
 // });
 
-router.post("/", (req, res) => {
-    // auth.register(res, req.body);
-    user.getBalance(res, req.body);
-});
+router.post("/",
+    (req, res, next) => auth.checkToken(req, res, next),
+    (req, res) => user.getBalance(res, req.body)
+);
 
-router.post("/deposit", (req, res) => {
-    // auth.register(res, req.body);
-    user.deposit(res, req.body);
-});
+router.post("/deposit",
+    (req, res, next) => auth.checkToken(req, res, next),
+    (req, res) => user.deposit(res, req.body)
+);
 
-router.post("/withdraw", (req, res) => {
-    // auth.register(res, req.body);
-    user.withdraw(res, req.body);
-});
+router.post("/withdraw",
+    (req, res, next) => auth.checkToken(req, res, next),
+    (req, res) => user.withdraw(res, req.body)
+);
 
 
 router.delete("/", (req, res) => {
