@@ -12,7 +12,6 @@ const stockModule = require('./models/stock');
 const index = require('./routes/index');
 const register = require('./routes/register');
 const login = require('./routes/login');
-// const reports = require('./routes/reports');
 const user = require('./routes/user');
 const stock = require('./routes/stock');
 const chat = require('./routes/chat');
@@ -41,7 +40,6 @@ app.use((req, res, next) => {
 // Add routes
 app.use('/', index);
 app.use('/register', register);
-// app.use('/reports', reports);
 app.use('/login', login);
 app.use('/user', user);
 app.use('/stock', stock);
@@ -99,21 +97,9 @@ var lakritssnoren = {
 var cakes = [hallonbatar, lakritssnoren];
 
 
-// function getRandomValue() {
-//     return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
-// }
-
-// io.on('connection', function(socket) {
-//     console.log('a user connected');
-//     socket.on('disconnect', function() {
-//         console.log('user disconnected');
-//     });
-// });
-
-
 // ===================
 
-io.set('origins', ['https://avanza.hasselstigen.me:443', 'https://me-app.hasselstigen.me:443']);
+// io.set('origins', ['https://avanza.hasselstigen.me:443', 'https://me-app.hasselstigen.me:443']);
 
 io.on('connection', (socket) => {
     console.log("User connected");
