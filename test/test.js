@@ -146,6 +146,20 @@ describe('Testing of PROJ-API', () => {
                     done();
                 });
         });
+        it('POST withdraw money should work (token and email)', (done) => {
+            chai.request(server)
+                .post("/user/withdraw")
+                .set('Content-Type', 'application/json')
+                .set('x-access-token', token)
+                .send(JSON.stringify({
+                    email: "test@test.se",
+                    money: 100
+                }))
+                .end((err, res) => {
+                    res.should.have.status(201);
+                    done();
+                });
+        });
         it('POST get current stocks from user (token and email)', (done) => {
             chai.request(server)
                 .post("/stock")
@@ -175,7 +189,7 @@ describe('Testing of PROJ-API', () => {
                     done();
                 });
         });
-        it('POST buy stock, shold not work (no email)', (done) => {
+        it('POST buy stock, should not work (no email)', (done) => {
             let user= {
                 // email: "test@test.se",
                 password: "test123"
