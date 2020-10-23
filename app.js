@@ -109,7 +109,11 @@ io.on('connection', (socket) => {
         // insertPost(db, socket.username, msg, getNow(), function() {
         //     client.close();
         //   });
-        io.emit('message', {'user': socket.username, 'timestamp': stockModule.getNow(), 'message': msg});
+        io.emit('message', {
+            'user': socket.username,
+            'timestamp': stockModule.getNow(),
+            'message': msg
+        });
     });
     socket.on('join', (username) => {
         if (username != null) {
