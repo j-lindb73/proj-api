@@ -31,7 +31,7 @@ funktioner i backend.
 
 Överlag är jag nöjd men mitt val av teknik har en liten bieffekt som jag inte lagt tillräckligt med tid för att lösa än. När jag genomför en försäljning av aktier hämtar jag aktuell kurs på vald aktie. Det påverkar visningen av aktierna och aktuell kurs ända tills en kursuppdatering anländer. 
 
-### 'Krav 4: Tester backen' in project specifications, in swedish)
+### 'Krav 4: Tester backend' in project specifications, in swedish)
 Precis som i tidigare kursmoment använde jag [Mocha](https://mochajs.org/) tillsammans med [Chai](https://www.chaijs.com/)  för att genomföra integrationstester
 i kombination med [Istanbul](https://istanbul.js.org/) för att generera kodtäckning.
 Som jag byggt upp det är det lite svårt att testa vissa funktioner. Om man med ett test t.ex. vill verifiera att email-adressen finns med vid köp av aktie så kommer man aldrig så långt eftersom det INNAN köpet görs en koll av användarens likvida medel så att han har råd att köpa aktierna. Redan där säger systemet ifrån om email-adressen saknas så köpet avbryts. Det påverkar ju egentligen inte funktionen i API:t men däremot kodtäckningen i vissa moduler. Jag lyckades kravla mig över 70% och med det får jag vara nöjd.

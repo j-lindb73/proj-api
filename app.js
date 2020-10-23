@@ -97,9 +97,9 @@ var lakritssnoren = {
 var cakes = [hallonbatar, lakritssnoren];
 
 
-// ===================
+// // ===================
 
-// io.set('origins', ['https://avanza.hasselstigen.me:443', 'https://me-app.hasselstigen.me:443']);
+// // io.set('origins', ['https://avanza.hasselstigen.me:443', 'https://me-app.hasselstigen.me:443']);
 
 io.on('connection', (socket) => {
     console.log("User connected");
@@ -132,9 +132,10 @@ io.on('connection', (socket) => {
     });
 });
 
-// =========================
+// // =========================
 
 setInterval(function () {
+    // console.log(cakes);
     cakes.map((cake) => {
         cake["course"] = stockModule.getStockPrice(cake);
         cake["timestamp"] = getNow();
@@ -146,7 +147,7 @@ setInterval(function () {
     io.emit("newdata", cakes);
 }, 5000);
 
-// Get timestamp
+// // Get timestamp
 
 function getNow() {
     const d = new Date();

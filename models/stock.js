@@ -11,7 +11,7 @@ const stock = {
         // const apiKey = body.api_key;
 
         if (!email || !stockname || !amount || !price) {
-            missingValue(res);
+            this.missingValue(res);
             return;
         }
 
@@ -44,7 +44,7 @@ const stock = {
         const email = body.email;
 
         if (!email) {
-            missingValue(res);
+            this.missingValue(res);
             return;
         }
 
@@ -79,7 +79,7 @@ const stock = {
         // const apiKey = body.api_key;
 
         if (!email || !userStockRowid) {
-            missingValue(res);
+            this.missingValue(res);
             return;
         }
 
@@ -115,19 +115,29 @@ const stock = {
         let variance = input.variance;
 
         return start * rate + variance * stock.randomAroundZero();
+    },
+    missingValue: function(res) {
+        return res.status(401).json({
+            errors: {
+                status: 401,
+                source: "/user",
+                title: "Value is missing",
+                detail: "Value is missing in request"
+            }
+        });
     }
 
 };
 
-function missingValue(res) {
-    return res.status(401).json({
-        errors: {
-            status: 401,
-            source: "/user",
-            title: "Value is missing",
-            detail: "Value is missing in request"
-        }
-    });
-}
+// function missingValue(res) {
+//     return res.status(401).json({
+//         errors: {
+//             status: 401,
+//             source: "/user",
+//             title: "Value is missing",
+//             detail: "Value is missing in request"
+//         }
+//     });
+// }
 
 module.exports = stock;
