@@ -7,7 +7,7 @@ const user = {
 
 
         if (!email) {
-            missingValue(res);
+            this.missingValue(res);
             return;
         }
 
@@ -54,7 +54,7 @@ const user = {
         const email = body.email;
 
         if (!email) {
-            missingValue(res);
+            this.missingValue(res);
             return;
         }
 
@@ -127,7 +127,7 @@ const user = {
         const deposit = totalPrice ? totalPrice : body.money;
 
         if (!email || !deposit) {
-            missingValue(res);
+            this.missingValue(res);
             return;
         }
 
@@ -166,7 +166,7 @@ const user = {
         console.log(body);
 
         if (!email || !withdraw) {
-            missingValue(res);
+            this.missingValue(res);
             return;
         }
 
@@ -195,18 +195,17 @@ const user = {
                     });
                 }
             });
+    },
+    missingValue: function(res) {
+        return res.status(401).json({
+            errors: {
+                status: 401,
+                source: "/user",
+                title: "Value is missing",
+                detail: "Value is missing in request"
+            }
+        });
     }
 };
-
-function missingValue(res) {
-    return res.status(401).json({
-        errors: {
-            status: 401,
-            source: "/user",
-            title: "Value is missing",
-            detail: "Value is missing in request"
-        }
-    });
-}
 
 module.exports = user;

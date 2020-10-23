@@ -97,9 +97,9 @@ var lakritssnoren = {
 var cakes = [hallonbatar, lakritssnoren];
 
 
-// // ===================
+// ===================
 
-// // io.set('origins', ['https://avanza.hasselstigen.me:443', 'https://me-app.hasselstigen.me:443']);
+// io.set('origins', ['https://avanza.hasselstigen.me:443', 'https://me-app.hasselstigen.me:443']);
 
 io.on('connection', (socket) => {
     console.log("User connected");
@@ -109,7 +109,7 @@ io.on('connection', (socket) => {
         // insertPost(db, socket.username, msg, getNow(), function() {
         //     client.close();
         //   });
-        io.emit('message', {'user': socket.username, 'timestamp': getNow(), 'message': msg});
+        io.emit('message', {'user': socket.username, 'timestamp': stockModule.getNow(), 'message': msg});
     });
     socket.on('join', (username) => {
         if (username != null) {
@@ -118,7 +118,7 @@ io.on('connection', (socket) => {
         console.log(socket.username + " joined");
         socket.broadcast.emit('message', {
             'user': 'Server',
-            'timestamp': getNow(),
+            'timestamp': stockModule.getNow(),
             'message': socket.username + " har anslutit till chatten!"});
     });
 
@@ -127,7 +127,7 @@ io.on('connection', (socket) => {
         console.log(socket.username);
         socket.broadcast.emit('message', {
             'user': 'Server',
-            'timestamp': getNow(),
+            'timestamp': stockModule.getNow(),
             'message': socket.username + " har lämnat chatten!" + reason});
     });
 });
@@ -138,7 +138,7 @@ setInterval(function () {
     // console.log(cakes);
     cakes.map((cake) => {
         cake["course"] = stockModule.getStockPrice(cake);
-        cake["timestamp"] = getNow();
+        cake["timestamp"] = stockModule.getNow();
         return cake;
     });
 
@@ -149,11 +149,11 @@ setInterval(function () {
 
 // // Get timestamp
 
-function getNow() {
-    const d = new Date();
-    const timestampISO = d.toISOString();
+// function getNow() {
+//     const d = new Date();
+//     const timestampISO = d.toISOString();
 
-    return timestampISO;
-}
+//     return timestampISO;
+// }
 
 module.exports = server;

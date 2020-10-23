@@ -125,19 +125,13 @@ const stock = {
                 detail: "Value is missing in request"
             }
         });
+    },
+    getNow: function() {
+        const d = new Date();
+        const timestampISO = d.toISOString();
+        return timestampISO;
     }
 
 };
-
-// function missingValue(res) {
-//     return res.status(401).json({
-//         errors: {
-//             status: 401,
-//             source: "/user",
-//             title: "Value is missing",
-//             detail: "Value is missing in request"
-//         }
-//     });
-// }
 
 module.exports = stock;
