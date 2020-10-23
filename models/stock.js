@@ -129,7 +129,7 @@ const stock = {
     getNow: function() {
         const d = new Date();
         const timestampISO = d.toISOString();
-        
+
         return timestampISO;
     }
 
