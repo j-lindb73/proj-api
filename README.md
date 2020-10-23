@@ -39,7 +39,9 @@ Som jag byggt upp det är det lite svårt att testa vissa funktioner. Om man med
 Jag skapade en CI-kedja med [Travis](https://travis-ci.org/) och kodtäcknings- och kodvalideringsverktyget [Scrutinizer](https://scrutinizer-ci.com/).
 Jag hade en del problem med att få testerna av Chat att fungera. Lokalt gick det fint men i Travis var jag tvungen att få igång mongoDB i testmiljön vilket stökade lite...men det gick till slut.
 När man väl har satt upp CI-kedjan känns det som om det är ett ovärderligt verktyg för att få koll på sin lösning och för att undvika driftstörningar. Visst, det är ÄCKLIGT irriterande när man gjort en uppdatering och så går skiten inte igenom testet men när man väl löst problemet som genererade felet är man ju i alla fall tacksam att det hittades direkt, och inte i ett senare skede.
-I skrivande stund har jag en kodkvalitet på 6.10. Det är en liten besvikelse. Det är framförallt 2 funktioner som ställer till det för mig och just nu förstår jag inte vad som är problemet.
+Initialt hade jag lite problem med min kodkvalitet och jag hade problem med att förstå felmeddelandet men efter lite justeringar och test så löste det sig. Även om jag inte fullt ut förstår hur kodkvaliteten bedöms är det ju väldigt tillfredsställande när man får en 10:a, och en besvikelse när det är runt 6.1.
+
+Gröna badges är fint...
 
 ## Project setup
 
